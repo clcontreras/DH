@@ -21,7 +21,7 @@ void save_gr(double z1, double z2, double lB_red, double kappa_red) {
   g11 << "#" << std::endl;
   // This loop calculates the cation-cation g(r) and saves it to the file
   // g_11.dat with 12 decimal places of precision for g(r)
-  for (double r = 0.0008; r < 10; r += 0.0001) {
+  for (double r = 0.0008; r < 5; r += 0.0005) {
     g11 << r << " " << std::setprecision(12)
         << dh(z1, z1, r, lB_red, kappa_red) << std::endl;
   }
@@ -35,7 +35,7 @@ void save_gr(double z1, double z2, double lB_red, double kappa_red) {
   // This loop calculates the anion-anion g(r) and saves it to the file
   // g_22.dat
 
-  for (double r = 0.0008; r < 10; r += 0.0001) {
+  for (double r = 0.0008; r < 5; r += 0.0005) {
     g22 << r << " " << std::setprecision(12)
         << dh(z2, z2, r, lB_red, kappa_red) << std::endl;
   }
@@ -48,7 +48,7 @@ void save_gr(double z1, double z2, double lB_red, double kappa_red) {
   g12 << "#" << std::endl;
   // This loop calculates the cation-anion g(r) and saves it to the file
   // g_12.dat
-  for (double r = 0.0008; r < 10; r += 0.0001) {
+  for (double r = 0.0008; r < 5; r += 0.0005) {
     g12 << r << " " << std::setprecision(12)
         << dh(z1, z2, r, lB_red, kappa_red) << std::endl;
   }
@@ -61,7 +61,7 @@ void save_gr(double z1, double z2, double lB_red, double kappa_red) {
   g21 << "#" << std::endl;
   // This loop calculates the anion-cation g(r) and saves it to the file
   // g_21.dat
-  for (double r = 0.0008; r < 10; r += 0.0001) {
+  for (double r = 0.0008; r < 5; r += 0.0005) {
     g21 << r << " " << std::setprecision(12)
         << dh(z2, z1, r, lB_red, kappa_red) << std::endl;
   }
@@ -360,8 +360,23 @@ int main() {
   save_Hq(kappa_red, Dkappa, D0);
   // Save the FS(q,t) functions to files
   save_FSqt(kappa_red, Dkappa, D0);
+
+  std::cout << "********************************************************"
+            << std::endl;
+  std::cout << "Reduced short-time cation-cation partial mobility is "
+            << 1 - (Dkappa / (2 * D0)) << std::endl;
+  std::cout << "Reduced short-time cation-anion partial mobility is "
+            << (Dkappa / (2 * D0)) << std::endl;
+
+  std::cout << "********************************************************"
+            << std::endl;
+
+  std::cout << "Reduced electrophoretic mobility of cations is "
+            << 1 - (Dkappa / D0) << std::endl;
+  
   std::cout
-      << "Mcirr(q=0,t) integrada en el tiempo es para cation-cation "
+      << "Mcirr(q=0,t) reducida integrada en el tiempo es para cation-cation "
       << ((2 - sqrt(2)) / 12) * kappa * lB << std::endl;
+
   return 0;
 }
